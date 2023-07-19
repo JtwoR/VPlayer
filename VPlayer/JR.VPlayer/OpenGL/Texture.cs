@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace JRVPlayer
+namespace JR.VPlayer.OpenGL
 {
     public class Texture
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JRVPlayer
+namespace JR.VPlayer.OpenGL
 {
     public class RenderHelper
     {
@@ -67,7 +67,7 @@ namespace JRVPlayer
             GL.EnableVertexAttribArray(texCoordLocation);
         }
 
-        public void DrawTexture(int width, int height, IntPtr image) {
+        public void DrawTexture(int width, int height, byte[] image) {
             GL.BindVertexArray(_vertexArrayObject);
 
             //_texture.Change(OpenTK.Graphics.OpenGL4.TextureUnit.Texture0,width,height,image);
@@ -75,7 +75,7 @@ namespace JRVPlayer
             GL.ActiveTexture(TextureUnit.Texture0);
             GL.BindTexture(TextureTarget.Texture2D, texture.Handle);
 
-            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, width, height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, image);
+            GL.TexImage2D<byte>(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, width, height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, image);
 
             texture.Use(TextureUnit.Texture0);
             shader.Use();

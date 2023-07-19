@@ -6,40 +6,46 @@
         xmlns:glWpfControl="clr-namespace:OpenTK.Wpf;assembly=GLWpfControl"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:VPlayer"
+        xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
 
-    <Grid Background="Black">
+    <Grid Background="White">
         <Grid.RowDefinitions>
-            <RowDefinition Height="20"></RowDefinition>
+            <!--<RowDefinition Height="20"></RowDefinition>-->
             <RowDefinition Height="300*"></RowDefinition>
-            <RowDefinition Height="60"></RowDefinition>
+            <!--<RowDefinition Height="60"></RowDefinition>-->
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <DockPanel Grid.Row="0">
+        <!--<DockPanel Grid.Row="0">
             <Menu DockPanel.Dock="Top" Height="20">
                 <MenuItem Header="文件" Height="19">
                     <MenuItem Header="打开"/>
                 </MenuItem>
             </Menu>
 
-        </DockPanel>
+        </DockPanel>-->
         <glWpfControl:GLWpfControl  Grid.Row="1"
             x:Name="OpenTkControl" 
             Render="OpenTkControl_OnRender"   />
-        <Slider x:Name="Slider" Minimum="0" Grid.Row="2" Height="20" VerticalAlignment="Top" HorizontalAlignment="Right" Width="800" >
-            <Slider.Template>
+        <!--<smtx:XamlDisplay UniqueKey="continuous_slider_h_1">
+            <Slider Maximum="50"
+                  Minimum="0"
+                  Value="35" Margin="0,396,0,-396" />
+        </smtx:XamlDisplay>
+        <Slider x:Name="Slider" Minimum="0" Grid.Row="2" Height="20" VerticalAlignment="Top" PreviewMouseDown="Slider_PreviewMouseDown">
+            <Slider.Template >
                 <ControlTemplate TargetType="Slider">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <TickBar Grid.Row="0" Fill="Black" Placement="Bottom" 
-                         Height="10" SnapsToDevicePixels="True"/>
-                        <Track Grid.Row="1" x:Name="PART_Track" >
+                        <TickBar Grid.Row="0" Placement="Bottom" 
+                         Height="10" SnapsToDevicePixels="True" PreviewMouseDown="Slider_PreviewMouseDown"/>
+                        <Track Grid.Row="1" x:Name="PART_Track"  PreviewMouseDown="Slider_PreviewMouseDown">
                             <Track.DecreaseRepeatButton>
                                 <RepeatButton Command="Slider.DecreaseLarge"/>
                             </Track.DecreaseRepeatButton>
@@ -47,13 +53,16 @@
                                 <RepeatButton Command="Slider.IncreaseLarge"/>
                             </Track.IncreaseRepeatButton>
                             <Track.Thumb>
-                                <Thumb DragCompleted="Thumb_DragCompleted"/>
+                                <Thumb DragStarted="Thumb_DragStarted" DragCompleted="Thumb_DragCompleted"  MouseLeftButtonDown="Thumb_MouseLeftButtonDown" />
+
+
+
                             </Track.Thumb>
                         </Track>
                     </Grid>
                 </ControlTemplate>
             </Slider.Template>
-        </Slider>
+        </Slider>-->
 
     </Grid>
 </Window>
