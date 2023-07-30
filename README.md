@@ -8,7 +8,7 @@
 ---
 * ### 说明
 
-    >1、拉取项目:
+    >1、管理员权限cmd，拉取项目:
     >```shell
     >git clone https://github.com/JtwoR/VPlayer.git
     >
@@ -27,7 +27,7 @@
     >```shell
     >dotnet build
     >
-    >bin\Debug\net5.0-windows\VPlayer.exe 需要播放的文件路径
+    >VPlayer\bin\Debug\net5.0-windows\VPlayer.exe 需要播放的文件路径
     >```
     
 ---
