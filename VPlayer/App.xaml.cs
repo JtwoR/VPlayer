@@ -13,5 +13,6 @@ namespace VPlayer
     /// </summary>
     public partial class App : Application
     {
+        
     }
 }

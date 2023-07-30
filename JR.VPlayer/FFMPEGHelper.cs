@@ -138,29 +138,25 @@ namespace JR.VPlayer
             _audioContext = ffmpeg.avcodec_alloc_context3(ffmpeg.avcodec_find_decoder(_context->streams[_audioIndex]->codecpar->codec_id));
             if (_audioContext == null)
             {
-                Console.WriteLine("Motion: Failed to get audio codec context");
-                return;
+                throw new Exception("Motion: Failed to get audio codec context");
             }
 
             _audioCodec = ffmpeg.avcodec_find_decoder(_audioContext->codec_id);
             if (_audioCodec == null)
             {
-                Console.WriteLine("Motion: Failed to find audio codec");
-                return;
+                throw new Exception("Motion: Failed to find audio codec");
             }
 
             ffmpeg.avcodec_parameters_to_context(_audioContext, _context->streams[_audioIndex]->codecpar);
             if (ffmpeg.avcodec_open2(_audioContext, _audioCodec, null) != 0)
             {
-                Console.WriteLine("Motion: Failed to load audio codec");
-                return;
+                throw new Exception("Motion: Failed to load audio codec");
             }
 
             _audioRawBuffer = ffmpeg.av_frame_alloc();
             if (_audioRawBuffer == null)
             {
-                Console.WriteLine("Motion: Failed to allocate audio buffer");
-                return;
+                throw new Exception("Motion: Failed to allocate audio buffer");
             }
 
             AVChannelLayout outChannelLayout;
@@ -169,7 +165,7 @@ namespace JR.VPlayer
             SwrContext* _audioSwContextInit = ffmpeg.swr_alloc();
             ffmpeg.swr_alloc_set_opts2(&_audioSwContextInit,
                                         &outChannelLayout, AVSampleFormat.AV_SAMPLE_FMT_S16,
-                                        44100, &_audioContext->ch_layout,
+                                        _audioContext->sample_rate, &_audioContext->ch_layout,
                                         _audioContext->sample_fmt, _audioContext->sample_rate, 0,
                                         null);
             ffmpeg.swr_init(_audioSwContextInit);
@@ -188,7 +184,7 @@ namespace JR.VPlayer
             else if (check >= 0)
             {
                 _audioDuration = ffmpeg.av_rescale_q(packet->duration, _context->streams[_audioIndex]->time_base, new AVRational() { num = 1, den = 1000000 });
-                uint outSizeCandidate = Convert.ToUInt32(44100 * 8 * ((double)_audioDuration) / 1000000.0);
+                uint outSizeCandidate = Convert.ToUInt32(_audioContext->sample_rate * 8 * ((double)_audioDuration) / 1000000.0);
                 byte* convertData = (byte*)ffmpeg.av_malloc(sizeof(byte) * outSizeCandidate);
 
                 var left_channel = _audioRawBuffer->data[0];//左声道数据
@@ -204,7 +200,7 @@ namespace JR.VPlayer
                     arr[i] = convertData[i];
                 }
 
-                var audioPacket = new AudioPacket(arr, Audiobuffer_size, 44100);
+                var audioPacket = new AudioPacket(arr, Audiobuffer_size, _audioContext->sample_rate);
 
                 ffmpeg.av_free(convertData);
                 _audioManager.dataQueue.Enqueue(audioPacket);
@@ -218,7 +214,7 @@ namespace JR.VPlayer
             AVPacket* packet = ffmpeg.av_packet_alloc();
             AVFrame* pFrame = ffmpeg.av_frame_alloc();//解码缓冲区
 
-            while (true)
+            for(;;)
             {
                 if (_videoManager.dataQueue.Count > 1000 || _audioManager.dataQueue.Count > 2000)
                 {

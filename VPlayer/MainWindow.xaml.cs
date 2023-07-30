@@ -25,13 +25,15 @@ namespace VPlayer
     public partial class MainWindow : Window
     {
         JR.VPlayer.VPlayer player;
-        public MainWindow()
+        public MainWindow(string path)
         {
             InitializeComponent();
+
             var mainSettings = new GLWpfControlSettings { MajorVersion = 4, MinorVersion = 5, GraphicsProfile = ContextProfile.Compatability, GraphicsContextFlags = ContextFlags.Debug }; ;
             OpenTkControl.Start(mainSettings);
+            player = new JR.VPlayer.VPlayer(path);
+            player.Run();
 
-            player = new JR.VPlayer.VPlayer("D://test2.mp4");
 
             //播放进度条
             //this.Slider.Maximum = player.currentVideoLen;
@@ -41,9 +43,6 @@ namespace VPlayer
             //        this.Slider.Value = second;
             //    });
 
-            player.Run();
-
-            
         }
 
         private void OpenTkControl_OnRender(TimeSpan delta)
