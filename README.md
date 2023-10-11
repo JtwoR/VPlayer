@@ -1,5 +1,5 @@
 # VPlayer
-###基于 NETCORE + ffmpeg + OpenGL + OpenAL 实现的音视频播放器
+### 基于 NETCORE + ffmpeg + OpenGL + OpenAL 实现的音视频播放器
 
 [![NETCORE](https://img.shields.io/badge/.NETCORE-5-important.svg?style=plastic)]()
 [![FFMPEG](https://img.shields.io/badge/FFMPEG-5.x+-brightgreen.svg?style=plastic)](https://github.com/BtbN/FFmpeg-Builds/releases)
@@ -31,11 +31,15 @@
     >```
     
 ---
+* ### 效果
+
+https://github.com/JtwoR/VPlayer/preview.mkv
+
 * ##### 由于刚接触音视频知识，音频处理方面问题会比较大😭😭😭，码率与重采样对各情况的适配未进行处理，有可能会出现噪音的情况，要注意音量。
 * ### To do
     - [x] 音视频解码
     - [x] WPF+OpenGL进行视频渲染
     - [x] OpenAL播放音频
-    - [ ] 音视频同步   
-    - [ ] 播放条
+    - [x] 音视频同步   
+    - [x] 播放条
     - [ ] 音视频适配
