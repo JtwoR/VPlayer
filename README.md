@@ -5,6 +5,8 @@
 [![FFMPEG](https://img.shields.io/badge/FFMPEG-5.x+-brightgreen.svg?style=plastic)](https://github.com/BtbN/FFmpeg-Builds/releases)
 [![OPENAL](https://img.shields.io/badge/OpenAL-Last-blue.svg?style=plastic)](https://www.openal.org/downloads/)
 
+[使用的UI框架](https://github.com/aduskin/AduSkin)
+
 ---
 * ### 说明
 
@@ -33,7 +35,8 @@
 ---
 * ### 效果
 
-![](https://github.com/JtwoR/VPlayer/blob/main/preview.mov)
+https://github.com/JtwoR/VPlayer/assets/19169722/9f62982e-8584-4430-9702-665ab01ee9cb
+
 
 
 * ##### 由于刚接触音视频知识，音频处理方面问题会比较大😭😭😭，码率与重采样对各情况的适配未进行处理，有可能会出现噪音的情况，要注意音量。
