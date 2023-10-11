@@ -33,7 +33,7 @@
 ---
 * ### 效果
 
-https://github.com/JtwoR/VPlayer/blob/main/preview.mkv
+https://github.com/JtwoR/VPlayer/blob/main/preview.mov
 
 * ##### 由于刚接触音视频知识，音频处理方面问题会比较大😭😭😭，码率与重采样对各情况的适配未进行处理，有可能会出现噪音的情况，要注意音量。
 * ### To do
