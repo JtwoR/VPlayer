@@ -10,9 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MaterialDesignThemes" Version="4.8.1-ci186" />
     <PackageReference Include="OpenTK.GLWpfControl" Version="4.2.2" />
-    <PackageReference Include="ShowMeTheXAML" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,6 +29,13 @@
   <ItemGroup>
     <AssetsSourceFiles Include="FFMPEG/*.*" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="AduSkin">
+      <HintPath>Packages\AduSkin.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 
   <Target Name="CopyCustomContent" AfterTargets="AfterBuild">
     <Copy SourceFiles="@(AssetsSourceFiles)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />

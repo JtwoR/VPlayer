@@ -6,63 +6,91 @@
         xmlns:glWpfControl="clr-namespace:OpenTK.Wpf;assembly=GLWpfControl"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:VPlayer"
-        xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+        xmlns:AduSkin="clr-namespace:AduSkin.Controls.Metro;assembly=AduSkin"
+        xmlns:Adu="clr-namespace:AduSkin.Controls.Metro;assembly=AduSkin"
+        xmlns:AduPlayer="clr-namespace:AduSkin.Demo.UserControls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="VPlayer" Height="450" Width="800"  >
+    <Window.Resources>
+        <SolidColorBrush x:Key="DefaultBrush" Color="#EE796F" />
+        <SolidColorBrush x:Key="icon_normal_color" Color="#EE796F" />
+        <SolidColorBrush x:Key="icon_hover_color" Color="#FA9D95" />
+        <SolidColorBrush x:Key="icon_pressed_color" Color="#E55A50" />
+        <SolidColorBrush x:Key="icon_disabled_color" Color="#2B2A2A" />
+        <Geometry x:Key="Icon_SysMin">F1M0,6L0,9 9,9 9,6 0,6z</Geometry>
+        <Geometry x:Key="Icon_SysMax">F1M0,0L0,9 9,9 9,0 0,0 0,3 8,3 8,8 1,8 1,3z</Geometry>
+        <Geometry x:Key="Icon_SystemRestore">F1M0,10L0,3 3,3 3,0 10,0 10,2 4,2 4,3 7,3 7,6 6,6 6,5 1,5 1,10z M1,10L7,10 7,7 10,7 10,2 9,2 9,6 6,6 6,9 1,9z</Geometry>
+        <Geometry x:Key="Icon_SystemClose">M453.44 512L161.472 220.032a41.408 41.408 0 0 1 58.56-58.56L512 453.44 803.968 161.472a41.408 41.408 0 0 1 58.56 58.56L570.56 512l291.968 291.968a41.408 41.408 0 0 1-58.56 58.56L512 570.56 220.032 862.528a41.408 41.408 0 0 1-58.56-58.56L453.44 512z</Geometry>
+    </Window.Resources>
+    <Window.Style>
 
-    <Grid Background="White">
-        <Grid.RowDefinitions>
-            <!--<RowDefinition Height="20"></RowDefinition>-->
+        <Style TargetType="{x:Type Window}">
+            <Setter Property="Background" Value="Black"></Setter>
+            <Setter Property="WindowChrome.WindowChrome">
+
+                <Setter.Value>
+
+                    <WindowChrome
+                     CornerRadius="0"
+                        CaptionHeight="30"
+                  GlassFrameThickness="-1"
+                  UseAeroCaptionButtons="True"
+                  NonClientFrameEdges="None"/>
+
+                </Setter.Value>
+
+            </Setter>
+
+        </Style>
+
+    </Window.Style>
+
+
+    <Grid >
+        <Grid.RowDefinitions >
+            <RowDefinition Height="30"></RowDefinition>
             <RowDefinition Height="300*"></RowDefinition>
-            <!--<RowDefinition Height="60"></RowDefinition>-->
+            <RowDefinition Height="80"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <!--<DockPanel Grid.Row="0">
-            <Menu DockPanel.Dock="Top" Height="20">
-                <MenuItem Header="文件" Height="19">
-                    <MenuItem Header="打开"/>
-                </MenuItem>
-            </Menu>
 
-        </DockPanel>-->
-        <glWpfControl:GLWpfControl  Grid.Row="1"
-            x:Name="OpenTkControl" 
-            Render="OpenTkControl_OnRender"   />
-        <!--<smtx:XamlDisplay UniqueKey="continuous_slider_h_1">
-            <Slider Maximum="50"
-                  Minimum="0"
-                  Value="35" Margin="0,396,0,-396" />
-        </smtx:XamlDisplay>
-        <Slider x:Name="Slider" Minimum="0" Grid.Row="2" Height="20" VerticalAlignment="Top" PreviewMouseDown="Slider_PreviewMouseDown">
-            <Slider.Template >
-                <ControlTemplate TargetType="Slider">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <TickBar Grid.Row="0" Placement="Bottom" 
-                         Height="10" SnapsToDevicePixels="True" PreviewMouseDown="Slider_PreviewMouseDown"/>
-                        <Track Grid.Row="1" x:Name="PART_Track"  PreviewMouseDown="Slider_PreviewMouseDown">
-                            <Track.DecreaseRepeatButton>
-                                <RepeatButton Command="Slider.DecreaseLarge"/>
-                            </Track.DecreaseRepeatButton>
-                            <Track.IncreaseRepeatButton>
-                                <RepeatButton Command="Slider.IncreaseLarge"/>
-                            </Track.IncreaseRepeatButton>
-                            <Track.Thumb>
-                                <Thumb DragStarted="Thumb_DragStarted" DragCompleted="Thumb_DragCompleted"  MouseLeftButtonDown="Thumb_MouseLeftButtonDown" />
+        <Grid Width="90" HorizontalAlignment="Right" Margin="0 0 15 0" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
 
+            <Adu:AduPathIconButton x:Name="MinimizeWindow" Margin="0,0,0,0"
+                                   PathData="{StaticResource Icon_SysMin}"  
+                                   DisabledPathColor="{StaticResource icon_hover_color}"
+                                   MouseOverPathColor="{StaticResource icon_hover_color}"
+                                   NormalPathColor="{StaticResource icon_normal_color}"
+                                   PressedPathColor="{StaticResource icon_pressed_color}"  PathWidth="11"
+                                   Grid.Column="0"  Command="{x:Static SystemCommands.MinimizeWindowCommand}" />
 
+            <Adu:AduPathIconButton x:Name="RestoreWindow" Margin="0,0,0,0"
+                                   PathData="{StaticResource Icon_SysMax}"  
+                                   DisabledPathColor="{StaticResource icon_hover_color}"
+                                   MouseOverPathColor="{StaticResource icon_hover_color}"
+                                   NormalPathColor="{StaticResource icon_normal_color}"
+                                   PressedPathColor="{StaticResource icon_pressed_color}"  PathWidth="11"
+                                   Grid.Column="1"  Command="{x:Static SystemCommands.RestoreWindowCommand}" />
 
-                            </Track.Thumb>
-                        </Track>
-                    </Grid>
-                </ControlTemplate>
-            </Slider.Template>
-        </Slider>-->
+            <Adu:AduPathIconButton x:Name="CloseWindow" Margin="0,0,0,0"
+                                   PathData="{StaticResource Icon_SystemClose}"  
+                                   DisabledPathColor="{StaticResource icon_hover_color}"
+                                   MouseOverPathColor="{StaticResource icon_hover_color}"
+                                   NormalPathColor="{StaticResource icon_normal_color}"
+                                   PressedPathColor="{StaticResource icon_pressed_color}"  PathWidth="11"
+                                   Grid.Column="2"  Command="{x:Static SystemCommands.CloseWindowCommand}" />
+
+        </Grid>
+
+        <glWpfControl:GLWpfControl  Grid.Row="1" x:Name="OpenTkControl" Render="OpenTkControl_OnRender"  />
+        <AduPlayer:VideoPlayer x:Name="PlayerUI" Grid.Row="2" Height="80" VerticalAlignment="Bottom"></AduPlayer:VideoPlayer>
 
     </Grid>
 </Window>

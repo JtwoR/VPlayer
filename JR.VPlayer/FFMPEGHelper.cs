@@ -23,12 +23,17 @@ namespace JR.VPlayer
         public long len;
         public int width;
         public int height;
+        public long second => _audioManager.second;
 
-        private AudioManager _audioManager = new AudioManager();
-        private VideoManager _videoManager = new VideoManager();
+        private AudioManager _audioManager;
+        private VideoManager _videoManager;
+        private readonly VPlayer _vPlayer;
 
-        unsafe public FFMPEGHelper(string path)
+        unsafe public FFMPEGHelper(string path, VPlayer vPlayer)
         {
+            _audioManager = new AudioManager(vPlayer);
+            _videoManager = new VideoManager(_audioManager,vPlayer);
+            _vPlayer= vPlayer;
             init(path);
         }
 
@@ -92,7 +97,7 @@ namespace JR.VPlayer
             }
             else if (check >= 0)
             {
-                int second = (int)(pFrame->pts * ffmpeg.av_q2d(_context->streams[_videoIndex]->time_base));
+                long second = (long)(packet->pts * ffmpeg.av_q2d(_context->streams[_videoIndex]->time_base) * 1000);
 
                 AVFrame* RGBAFrame;
                 RGBAFrame = ffmpeg.av_frame_alloc();
@@ -200,7 +205,8 @@ namespace JR.VPlayer
                     arr[i] = convertData[i];
                 }
 
-                var audioPacket = new AudioPacket(arr, Audiobuffer_size, _audioContext->sample_rate);
+                long time = (long)(packet->pts * ffmpeg.av_q2d(_context->streams[_audioIndex]->time_base) * 1000);
+                var audioPacket = new AudioPacket(arr, Audiobuffer_size, _audioContext->sample_rate, time);
 
                 ffmpeg.av_free(convertData);
                 _audioManager.dataQueue.Enqueue(audioPacket);
@@ -210,13 +216,15 @@ namespace JR.VPlayer
         #endregion
 
         public void Run()
-        {
+        {  
             AVPacket* packet = ffmpeg.av_packet_alloc();
             AVFrame* pFrame = ffmpeg.av_frame_alloc();//解码缓冲区
 
             for(;;)
             {
-                if (_videoManager.dataQueue.Count > 1000 || _audioManager.dataQueue.Count > 2000)
+                _vPlayer.PlayEvent.WaitOne();
+
+                if (_videoManager.dataQueue.Count > 100 || _audioManager.dataQueue.Count > 200)
                 {
                     Thread.Sleep(1);
                     continue;
@@ -232,6 +240,37 @@ namespace JR.VPlayer
                 ffmpeg.av_packet_unref(packet);
             }
             ffmpeg.av_free(packet);
+        }
+
+        public void SkipVideo(long SeekTimeInSeconds)
+        {
+            //var test = _context->streams[_audioIndex]->time_base;
+            //AVStream* videoStream = _context->streams[_audioIndex];
+            //long seekTarget = (long)(SeekTimeInSeconds / ffmpeg.av_q2d(_context->streams[_audioIndex]->time_base));
+            _vPlayer.PlayEvent.Reset();
+            _videoManager.dataQueue.Clear();
+            _audioManager.dataQueue.Clear();
+            _audioManager.ClearBuffers();
+            var error = ffmpeg.av_seek_frame(_context, _audioIndex, getStartTime(SeekTimeInSeconds), ffmpeg.AVSEEK_FLAG_BACKWARD | ffmpeg.AVSEEK_FLAG_FRAME);
+            _vPlayer.PlayEvent.Set();
+            if (error < 0)
+            {
+                // 跳转失败，处理错误
+                Console.WriteLine("Failed to seek to specified time. Error code: {0}", error);
+                //ffmpeg.avformat_close_input(&_context);
+                return;
+            }
+        }
+
+        private long getStartTime(long seconds)
+        {
+            long startTime = seconds * 1000;
+            long target_time = ffmpeg.av_rescale_q(startTime, ffmpeg.av_get_time_base_q(), _context->streams[_audioIndex]->time_base);
+            return target_time;
+        }
+        private static double av_q2d(AVRational a)
+        {
+            return a.num / (double)a.den;
         }
 
         public void VideoRun()=>_videoManager.Run();

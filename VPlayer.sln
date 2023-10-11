@@ -5,7 +5,7 @@ VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VPlayer", "VPlayer\VPlayer.csproj", "{68F9DD0C-152A-40C1-AB03-EE82EE5B6AEC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JR.VPlayer", "JR.VPlayer\JR.VPlayer.csproj", "{B9B83E8E-84EB-4B86-B3B5-672061CCBBA2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JR.VPlayer", "JR.VPlayer\JR.VPlayer.csproj", "{B9B83E8E-84EB-4B86-B3B5-672061CCBBA2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

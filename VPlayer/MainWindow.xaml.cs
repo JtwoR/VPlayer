@@ -19,6 +19,7 @@ using System.Windows.Shapes;
 
 namespace VPlayer
 {
+    
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -35,82 +36,13 @@ namespace VPlayer
             player.Run();
 
 
-            //播放进度条
-            //this.Slider.Maximum = player.currentVideoLen;
-            //player.UpdateSlider(
-            //    (second) =>
-            //    {
-            //        this.Slider.Value = second;
-            //    });
-
+            player.SilderValueChange += this.PlayerUI.videoPlayer.SilderValueChange;
+            this.PlayerUI.videoPlayer.SetVPlayer(player);
         }
 
         private void OpenTkControl_OnRender(TimeSpan delta)
         {
             player.Render();
-        }
-
-   
-
-        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            //// 获取新的值
-            //double newValue = e.NewValue;
-            //if (player != null)
-            //{
-            //    player.Skip((int)newValue * 24000);
-            //}
-        }
-
-        private void Thumb_DragCompleted(object sender, DragCompletedEventArgs e)
-        {
-            //if (player != null)
-            //{
-            //    player.Skip((int)this.Slider.Value*1000);
-            //    player.sliderStatus = SliderStatus.Complete;
-            //}
-
-        }
-        private void Thumb_DragStarted(object sender, DragStartedEventArgs e)
-        {
-            //if (player != null)
-            //{
-            //    player.sliderStatus = SliderStatus.Start;
-            //}
-
-        }
-
-        private void Thumb_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            //if (player != null)
-            //{
-            //    player.Skip((int)this.Slider.Value * 1000);
-            //    player.sliderStatus = SliderStatus.Complete;
-            //}
-        }
-
-        private void Thumb_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            //if (player != null)
-            //{
-            //    player.Skip((int)this.Slider.Value * 1000);
-            //    player.sliderStatus = SliderStatus.Complete;
-            //}
-        }
-
-        private void Slider_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-
-        }
-
-        private void Slider_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-
-        }
-
-        private void Slider_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-
         }
     }
 }

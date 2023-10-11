@@ -10,11 +10,13 @@ namespace JR.VPlayer
     {
         public readonly int Samplerate;
         public byte[] Data;
+        public long second;
 
-        public AudioPacket(byte[] data, int size, int samplerate)
+        public AudioPacket(byte[] data, int size, int samplerate, long second)
         {
             this.Data = data;
             this.Samplerate = samplerate;
+            this.second = second;
         }
     }
 }
