@@ -35,7 +35,7 @@
 ---
 * ### 效果
 
-https://github.com/JtwoR/VPlayer/assets/19169722/9f62982e-8584-4430-9702-665ab01ee9cb
+https://github.com/JtwoR/VPlayer/assets/19169722/9fdf8331-9902-40b9-8989-56d6f3747256
 
 
 
