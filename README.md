@@ -1,5 +1,5 @@
 # VPlayer
-### 基于 NETCORE + ffmpeg + OpenGL + OpenAL 实现的音视频播放器
+### 基于 WPF + ffmpeg + OpenGL + OpenAL 实现的音视频播放器
 
 [![NETCORE](https://img.shields.io/badge/.NETCORE-5-important.svg?style=plastic)]()
 [![FFMPEG](https://img.shields.io/badge/FFMPEG-5.x+-brightgreen.svg?style=plastic)](https://github.com/BtbN/FFmpeg-Builds/releases)
